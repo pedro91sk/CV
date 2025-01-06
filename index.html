@@ -247,13 +247,16 @@
       }
 
       nav {
-        width: 100%;
-        flex-direction: row;
-        justify-content: space-between;
-        align-items: center;
-        padding: 1rem;
-        gap: 0.5rem;
-      }
+    width: 100%;
+    flex-direction: row;
+    justify-content: space-between;  /* possibly changed to 'center'
+    align-items: center;
+    padding: 1rem;
+    gap: 0.5rem;
+
+    flex-wrap: wrap;                 /* new line */
+    background: linear-gradient(135deg, #2c3e50, #34495e); /* ensure it matches desktop gradient */
+  }
 
       .profile-img {
         width: 60px;
