@@ -1,0 +1,477 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="description" content="Peter Komenský - Professional Portfolio" />
+  <title>Peter Komenský Portfolio</title>
+  <!-- Google Fonts -->
+  <link
+    href="https://fonts.googleapis.com/css2?family=Raleway:wght@300;400;600&family=Open+Sans:wght@400;600&display=swap"
+    rel="stylesheet"
+  />
+  <style>
+    /* BASIC RESET & GLOBAL STYLES */
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+    body {
+      font-family: 'Open Sans', sans-serif;
+      background-color: #f4f7f6;
+      color: #333;
+      line-height: 1.6;
+      display: flex;
+      height: 100vh;
+      /* Remove or change overflow if you don't want vertical scroll */
+    }
+
+    /* NAVIGATION */
+    nav {
+      width: 20%;
+      background: linear-gradient(135deg, #2c3e50, #34495e);
+      color: white;
+      padding: 2rem 1rem;
+      display: flex;
+      flex-direction: column;
+      gap: 1.5rem;
+      align-items: center;
+      box-shadow: 5px 0 15px rgba(0, 0, 0, 0.1);
+    }
+    nav a {
+      color: white;
+      text-decoration: none;
+      font-weight: 600;
+      font-size: 1.1rem;
+      transition: all 0.3s ease-in-out;
+      cursor: pointer;
+    }
+    nav a:hover {
+      color: #1abc9c;
+      transform: scale(1.1);
+    }
+    .profile-img {
+      width: 150px;
+      height: 150px;
+      border-radius: 50%;
+      border: 4px solid #ffffff;
+      object-fit: cover;
+      margin-bottom: 1rem;
+      box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    }
+    .profile-name {
+      font-size: 1.2rem;
+      font-weight: 700;
+      color: #fff;
+      margin-bottom: 1rem;
+      text-align: center;
+    }
+
+    /* DOWNLOAD CV BUTTON */
+    .download-cv-button {
+      position: fixed;       /* Stay in the top-right corner */
+      top: 20px;             /* Distance from the top */
+      right: 20px;           /* Distance from the right */
+      background-color: #1abc9c;
+      color: #fff;
+      padding: 10px 20px;
+      text-decoration: none;
+      border-radius: 4px;
+      font-weight: 600;
+      transition: background-color 0.2s ease-in-out;
+      z-index: 999;          /* Ensure it stays on top */
+    }
+    .download-cv-button:hover {
+      background-color: #16a085;
+    }
+
+    /* CONTENT WRAPPER */
+    .content {
+      flex: 1;
+      padding: 2rem;
+      display: flex;
+      justify-content: flex-start;
+      align-items: flex-start;
+      text-align: left;
+      overflow-y: auto; /* comment this out or change to hidden if you don't want scrolling */
+    }
+
+    /* SECTIONS */
+    section {
+      display: none;
+      background: white;
+      padding: 2rem;
+      box-shadow: 0 6px 15px rgba(0, 0, 0, 0.1);
+      border-radius: 10px;
+      width: 70%;
+      animation: fadeIn 0.5s;
+      overflow-y: auto;
+    }
+    .visible {
+      display: block;
+    }
+
+    /* ANIMATIONS */
+    @keyframes fadeIn {
+      from {
+        opacity: 0;
+        transform: translateY(20px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+    @keyframes flyIn {
+      from {
+        transform: translateY(-20px);
+        opacity: 0;
+      }
+      to {
+        transform: translateY(0);
+        opacity: 1;
+      }
+    }
+
+    /* SKILLS SECTION */
+    .skills-container {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+      gap: 2rem;
+    }
+    .skills-category {
+      background: #fff;
+      padding: 1.5rem;
+      border-radius: 8px;
+      box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+      animation: flyIn 0.5s ease-in-out;
+    }
+    .skills-category h3 {
+      margin-bottom: 1rem;
+      font-weight: 600;
+    }
+    .skills-category ul {
+      list-style: none;
+    }
+    .skills-category li {
+      margin-bottom: 0.5rem;
+    }
+
+    /* EXPERIENCE SECTION AS CARDS */
+    .experience-container {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+      gap: 2rem;
+      margin-top: 2rem;
+    }
+    .experience-card {
+      background: #fff;
+      padding: 1.5rem;
+      border-radius: 8px;
+      box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+      animation: flyIn 0.5s ease-in-out;
+    }
+    .experience-card h3 {
+      font-weight: 600;
+      margin-bottom: 0.5rem;
+    }
+    .experience-card p {
+      margin-bottom: 0.5rem;
+    }
+
+    /* CERTIFICATIONS SECTION */
+    .certification-list {
+      list-style-type: none;
+      padding-left: 0;
+    }
+    .certification-list li {
+      margin-bottom: 1rem;
+      font-size: 1rem;
+    }
+    .certification-list a {
+      text-decoration: none;
+      color: #2c3e50; /* or your preferred link color */
+      font-weight: 600;
+      transition: color 0.3s;
+    }
+    .certification-list a:hover {
+      color: #1abc9c;
+    }
+
+    /* Active + blinking icon */
+    .active-status {
+      margin-left: 1rem;
+      font-weight: bold;
+      display: inline-flex;
+      align-items: center;
+    }
+    .green-dot {
+      display: inline-block;
+      width: 10px;
+      height: 10px;
+      border-radius: 50%;
+      background-color: green;
+      margin-right: 0.3rem;
+    }
+    /* Blink animation for the green dot */
+    .blink {
+      animation: blink 1s infinite;
+    }
+    @keyframes blink {
+      0%, 100% { opacity: 1; }
+      50% { opacity: 0; }
+    }
+
+    /* FOOTER */
+    footer {
+      background: #2c3e50;
+      color: white;
+      text-align: center;
+      padding: 1rem;
+      position: absolute;
+      bottom: 0;
+      width: 100%;
+    }
+  </style>
+</head>
+<body>
+  <!-- NAV -->
+  <nav>
+    <img src="profile.jpg" alt="Profile Photo" class="profile-img" />
+    <h2 class="profile-name">Peter Komenský</h2>
+    <a href="#about" onmouseover="showSection('about')">About</a>
+    <a href="#skills" onmouseover="showSection('skills')">Skills</a>
+    <a href="#experience" onmouseover="showSection('experience')">Experience</a>
+    <a href="#certifications" onmouseover="showSection('certifications')">Certifications</a>
+    <a href="#contact" onmouseover="showSection('contact')">Contact</a>
+  </nav>
+
+  <!-- DOWNLOAD CV BUTTON -->
+  <a
+    href="Peter Komensky_CV.pdf"
+    download
+    class="download-cv-button"
+  >
+    Download CV
+  </a>
+
+  <!-- CONTENT -->
+  <div class="content">
+    <!-- ABOUT SECTION -->
+    <section id="about">
+      <h2>About Me</h2><br/>
+      <p>
+        Cloud Service Engineer from Slovakia.<br/><br/> Experienced in managing Azure cloud and Microsoft services.<br/> I specialize in designing, deploying, and optimizing scalable solutions using DevOps best practices and automation tools.<br/> With a strong commitment to reliability and security, I enjoy helping organizations streamline processes, reduce costs, and deliver consistent, high-performing environments. <br/><br/> Driven by a passion for continuous learning, I stay up to date with the latest cloud technologies and love sharing my knowledge to foster growth within teams and communities.
+      </p>
+    </section>
+
+    <!-- SKILLS SECTION -->
+    <section id="skills">
+      <h2>Skills</h2>
+      <div class="skills-container">
+        <div class="skills-category">
+          <h3>OS</h3>
+          <ul>
+            <li>Windows Server</li>
+            <li>Linux (RedHat, Ubuntu)</li>
+          </ul>
+        </div>
+        <div class="skills-category">
+          <h3>Automation & Scripting</h3>
+          <ul>
+            <li>PowerShell</li>
+            <li>Ansible</li>
+            <li>Terraform, Bicep</li>
+            <li>HTML,CSS</li>
+            <li>Python</li>
+          </ul>
+        </div>
+        <div class="skills-category">
+          <h3>Cloud</h3>
+          <ul>
+            <li>Azure</li>
+            <li>Azure DevOps</li>
+            <li>Microsoft 365</li>
+          </ul>
+        </div>
+        <div class="skills-category">
+          <h3>Collaboration & Monitoring</h3>
+          <ul>
+            <li>JIRA, Confluence</li>
+            <li>Dynatrace, CheckMK, Grafana</li>
+            <li>Git & GitHub Actions</li>
+            <li>Microsoft Office 365, SharePoint</li>
+          </ul>
+        </div>
+      </div>
+    </section>
+
+    <!-- EXPERIENCE SECTION -->
+    <section id="experience">
+      <h2>Experience</h2>
+      <div class="experience-container">
+        <!-- CARD 1 -->
+        <div class="experience-card">
+          <h3>TietoEvry Slovakia</h3>
+          <p><strong>February 2024 - present</strong></p>
+          <p>Lead Configuration Manager</p>
+          <p><strong>Technologies:</strong> Azure, AVD, Git, Ansible, Bicep, PowerShell, CI/CD, Dynatrace, AWX, ARM</p>
+        </div>
+        <!-- CARD 2 -->
+        <div class="experience-card">
+          <h3>Creditas Bank</h3>
+          <p><strong>January 2023 - March 2024</strong></p>
+          <p>Azure Administrator</p>
+          <p><strong>Technologies:</strong> Azure, Fortinet, Azure DevOps, Microsoft Entra Connect</p>
+        </div>
+        <!-- CARD 3 -->
+        <div class="experience-card">
+          <h3>Tieto Czech</h3>
+          <p><strong>June 2022 - December 2022</strong></p>
+          <p>Senior Technical Specialist (Azure Infrastructure Engineer)</p>
+          <p><strong>Technologies:</strong> Azure, AVD, Git, GitHub Actions, Terraform, Windows Server, Linux</p>
+        </div>
+        <!-- CARD 4 -->
+        <div class="experience-card">
+          <h3>Accenture Slovakia</h3>
+          <p><strong>January 2021 - May 2022</strong></p>
+          <p>Software Engineer (L11 Analyst)</p>
+          <p><strong>Technologies:</strong> PowerShell, Jenkins, Git, RedHat, Oracle, SendGrid, Azure SQL, Grafana</p>
+        </div>
+        <!-- CARD 5 -->
+        <div class="experience-card">
+          <h3>Autocont SK</h3>
+          <p><strong>May 2019 - December 2020</strong></p>
+          <p>System Engineer</p>
+          <p><strong>Technologies:</strong> Azure, O365, EMS</p>
+        </div>
+        <!-- CARD 6 -->
+        <div class="experience-card">
+          <h3>Deutsche Telekom</h3>
+          <p><strong>January 2017 – April 2019</strong></p>
+          <p>Junior Microsoft CRM Service Engineer (Data Trustee Team Member)</p>
+          <p><strong>Technologies:</strong> Azure, PowerShell, Windows Server, Hyper-V, Microsoft SQL Server, CheckMK</p>
+        </div>
+        <!-- CARD 7 -->
+        <div class="experience-card">
+          <h3>T-Systems Slovakia</h3>
+          <p><strong>October 2015 – December 2016</strong></p>
+          <p>Windows Administrator II</p>
+          <p><strong>Technologies:</strong> VMware, Hyper-V, Windows Server</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- CERTIFICATIONS SECTION -->
+    <section id="certifications">
+      <h2>Certifications</h2><br/>
+      <ul class="certification-list">
+        <li>
+          <a
+            href="https://learn.microsoft.com/api/credentials/share/en-us/peterk91/499FBF74AD2A98A5?sharingId=7E37091C27C070A8"
+            target="_blank"
+          >Microsoft Certified: DevOps Engineer Expert</a>
+          <span class="active-status">
+            <span class="green-dot blink"></span>Active
+          </span>
+        </li>
+        <li>
+          <a
+            href="https://learn.microsoft.com/api/credentials/share/en-us/peterk91/B9F67CE29775CDF?sharingId=7E37091C27C070A8"
+            target="_blank"
+          >Microsoft Certified: Azure Administrator Associate</a>
+          <span class="active-status">
+            <span class="green-dot blink"></span>Active
+          </span>
+        </li>
+        <li>
+          <a
+            href="https://learn.microsoft.com/api/credentials/share/en-us/peterk91/272B6A88C4A015BD?sharingId=7E37091C27C070A8"
+            target="_blank"
+          >Microsoft Certified: Azure Security Engineer Associate</a>
+          <span class="active-status">
+            <span class="green-dot blink"></span>Active
+          </span>
+        </li>
+        <li>
+          <a
+            href="https://learn.microsoft.com/api/credentials/share/en-us/peterk91/F120B589E8323775?sharingId=7E37091C27C070A8"
+            target="_blank"
+          >Microsoft Certified: Azure Fundamentals</a>
+          <span class="active-status">
+            <span class="green-dot blink"></span>Active
+          </span>
+        </li>
+        <li>
+          <a
+            href="https://learn.microsoft.com/api/credentials/share/en-us/peterk91/3551A688DE389C8C?sharingId=7E37091C27C070A8"
+            target="_blank"
+          >Microsoft Certified: Identity and Access Administrator Associate</a>
+          <span class="active-status">
+            <span class="green-dot blink"></span>Active
+          </span>
+        </li>
+        <li>
+          <a
+            href="https://learn.microsoft.com/api/credentials/share/en-us/peterk91/E2FA8802D5CADF50?sharingId=7E37091C27C070A8"
+            target="_blank"
+          >Microsoft 365 Certified: Administrator Expert</a>
+          <span class="active-status">
+            <span class="green-dot blink"></span>Active
+          </span>
+        </li>
+        <li>
+          <a>MCSA: Windows Server 2016</a>
+          <span class="active-status">
+            <span class="green-dot blink"></span>Active
+          </span>
+        </li>
+        <li>
+          <a>Microsoft Certified Professional</a>
+          <span class="active-status">
+            <span class="green-dot blink"></span>Active
+          </span>
+        </li>
+      </ul>
+    </section>
+
+    <!-- CONTACT SECTION -->
+    <section id="contact">
+      <h2>Contact</h2>
+      <p>
+        Email:
+        <a href="mailto:peter.komensky@gmail.com">peter.komensky@gmail.com</a>
+      </p>
+      <p>
+        LinkedIn: Peter Komensky
+        <a
+          href="https://www.linkedin.com/in/peter-komensky-a1969313b/"
+          target="_blank"
+          style="margin-left: 8px;"
+        >
+          <img
+            src="https://cdn-icons-png.flaticon.com/512/174/174857.png"
+            alt="LinkedIn Icon"
+            style="width: 24px; height: 24px; vertical-align: middle;"
+          />
+        </a>
+      </p>
+    </section>
+  </div>
+
+  <!-- FOOTER -->
+  <footer>
+    <p>&copy; 2025 Peter Komenský. All Rights Reserved.</p>
+  </footer>
+
+  <script>
+    // Show the correct section on nav hover
+    function showSection(sectionId) {
+      const sections = document.querySelectorAll('section');
+      sections.forEach(section => section.classList.remove('visible'));
+      document.getElementById(sectionId).classList.add('visible');
+    }
+  </script>
+</body>
+</html>
